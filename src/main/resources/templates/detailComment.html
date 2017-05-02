@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title th:inline="text">Comentario - [[${comment.code}]]</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.0/css/bulma.min.css" integrity="sha256-8nf+BDtOgthqqdcfZXfDwth8LL6k314ILswPBDzXMp4=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="http://aswfiles.hol.es/style.css"/>
+</head>
+<body>
+<section class="section is">
+    <div class="container">
+        <div class="heading">
+            <h1 class="title">Dashboard</h1>
+            <section id="suggestionsSection" class="hero">
+                <div class="hero-body">
+                    <div class="container">
+                        <h2 class="title">
+                            Comentario
+                        </h2>
+                        <h3 class="subtitle">
+                            Detalles del comentario
+                        </h3>
+                        <div class="content">
+                            <h3 id="suggestionTitle" th:inline="text">[[${comment.code}]]</h3>
+                            <h4>Votos</h4>
+                            <div class="countVotes">
+                                Positivos: <span id="positive-vote-count" class="positive-vote" th:inline="text">[[${comment.positiveVotes}]]</span>
+                                Negativos: <span id="negative-vote-count" class="negative-vote" th:inline="text">[[${comment.negativeVotes}]]</span>
+                            </div>
+                            <h4>Comentario</h4>
+                            <p id="commentText" th:inline="text">[[${comment.description}]]</p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="column is-half content">
+                        <h3>Votos</h3>
+                        <table class="table is-striped" id="voteCommentTable">
+                            <thead>
+                            <tr>
+                                <th>Ciudadano</th>
+                                <th>Valor</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="vote: ${comment.voteComments}" th:class='${vote.vote.toString() == "POSITIVE"} ? positive-vote : negative-vote'>
+                                <td th:inline="text">[[${vote.citizen.name}]] [[${vote.citizen.surname}]]</td>
+                                <td th:inline="text">[[${vote.vote}]]</td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="column is-half has-text-centered vote-chart"></div>
+                </div>
+
+            </section>
+
+
+        </div>
+    </div>
+
+</section>
+<!--SCRIPTS-->
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var commentId = [[${comment.id}]];
+    var votos = [ [[${comment.positiveVotes}]] , [[${comment.negativeVotes}]] ];
+    /*]]>*/
+</script>
+<script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+<script
+        src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js" integrity="sha256-GcknncGKzlKm69d+sp+k3A2NyQE+jnu43aBl6rrDN2I=" crossorigin="anonymous"></script>
+<script src="http://aswfiles.hol.es/detailComment.js"></script>
+</body>
+</html>
